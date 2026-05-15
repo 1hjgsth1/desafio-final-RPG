@@ -15,3 +15,4 @@ data class Personagem(
     var velocidade: Int,
     var vida: Int
 )
+
