@@ -7,12 +7,11 @@ import jakarta.persistence.Id
 
 @Entity
 data class Personagem(
-
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
-
+// Atributos principais
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     val nome: String,
     var forca: Int,
     var velocidade: Int,
     var vida: Int
 )
-
