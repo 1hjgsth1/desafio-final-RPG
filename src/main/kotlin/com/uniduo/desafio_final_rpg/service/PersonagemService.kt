@@ -5,14 +5,14 @@ import com.uniduo.desafio_final_rpg.repository.PersonagemRepository
 import org.springframework.stereotype.Service
 
 @Service
-class PersonagemService (
+class PersonagemService(
     val personagemRepository: PersonagemRepository
-){
+) {
     /**
      * CRUD do personagem
      * */
     //Salvar
-    fun salvar(personagem: Personagem) : Personagem {
+    fun salvar(personagem: Personagem): Personagem {
         //Se não tenho um Primary Key vou criar uma nova entidade
         //se já tiver um nome igual no banco, somente vai editar
         //Se tenho um Primary Key somente vou editar
@@ -20,11 +20,11 @@ class PersonagemService (
     }
 
     //Buscar
-    fun buscarTodos(): List<Personagem>{
+    fun buscarTodos(): List<Personagem> {
         return personagemRepository.findAll()
     }
 
-    fun buscarPorNome(nome: String) : Personagem{
+    fun buscarPorNome(nome: String): Personagem {
         return personagemRepository.findById(nome).get()
     }
 
