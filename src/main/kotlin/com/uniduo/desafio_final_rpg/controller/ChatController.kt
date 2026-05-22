@@ -24,28 +24,20 @@ class ChatController (
     // @GetMapping: este endpoint responde a requisições HTTP GET em "/msg"
     // Serve como o "gatilho" para enviar uma mensagem ao rival
     // Uso: GET http://localhost:8080/msg?mensagem=Olá
-    @GetMapping("/msg")
-    fun mandarMensagemParaPersonagemRival(){
-        println("Digite seu nick: ")
-        val nick = readln()
-        var mensagem = ""
-        do{
-            mensagem = readln()
-            mensagem = "$nick: $mensagem"
-            try {
-                restClient.post()                      // Define que será uma requisição HTTP POST
-                    .uri(rivalUrl)                     // Define o destino: URL do rival (application.properties)
-                    .contentType(MediaType.TEXT_PLAIN) // Informa ao servidor rival que o corpo é texto puro (text/plain)
-                    .body(mensagem)                    // Define o corpo da requisição com a mensagem
-                    .retrieve()                        // Dispara a requisição e prepara para ler a resposta
-                    .toBodilessEntity()                // Lê apenas os headers/status, ignora o corpo da resposta
-            } catch (e: Exception){
-                // Captura qualquer erro de rede ou HTTP (ex: rival offline, connection refused)
-                println("Deu erro: ${e.message}")
-            }
-            //println("Deseja encerrar a conversa? S/N")
-        }while(true)
+    @PostMapping("/msg", consumes = [MediaType.TEXT_PLAIN_VALUE])
+    fun mandarMensagemParaPersonagemRival(@RequestBody mensagem: String): String {
+        return try {
+            restClient.post()
+                .uri(rivalUrl)
+                .contentType(MediaType.TEXT_PLAIN)
+                .body(mensagem)
+                .retrieve()
+                .toBodilessEntity()
 
+            "Mensagem enviada para o rival: $mensagem"
+        } catch (e: Exception) {
+            "Erro ao enviar mensagem: ${e.message}"
+        }
     }
 
     // @PostMapping: este endpoint responde a requisições HTTP POST em "/ouvir"

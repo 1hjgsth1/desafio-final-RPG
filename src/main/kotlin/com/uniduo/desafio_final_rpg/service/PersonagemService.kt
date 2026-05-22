@@ -8,30 +8,32 @@ import org.springframework.stereotype.Service
 class PersonagemService(
     val personagemRepository: PersonagemRepository
 ) {
-    /**
-     * CRUD do personagem
-     * */
-    //Salvar
+
     fun salvar(personagem: Personagem): Personagem {
-        //Se não tenho um Primary Key vou criar uma nova entidade
-        //se já tiver um nome igual no banco, somente vai editar
-        //Se tenho um Primary Key somente vou editar
         return personagemRepository.save(personagem)
     }
 
-    //Buscar
     fun buscarTodos(): List<Personagem> {
         return personagemRepository.findAll()
     }
 
-    fun buscarPorNome(nome: String): Personagem {
-        return personagemRepository.findById(nome).get()
+    fun buscarPorId(id: Long): Personagem {
+        return personagemRepository.findById(id)
+            .orElseThrow { RuntimeException("Personagem não encontrado com id: $id") }
     }
 
-    //Excluir
-    fun excluirPersonagem(nome: String) {
-        personagemRepository.deleteById(nome)
+    fun editar(id: Long, personagemAtualizado: Personagem): Personagem {
+        val personagemExistente = buscarPorId(id)
+
+        personagemExistente.nome = personagemAtualizado.nome
+        personagemExistente.forca = personagemAtualizado.forca
+        personagemExistente.velocidade = personagemAtualizado.velocidade
+        personagemExistente.vida = personagemAtualizado.vida
+
+        return personagemRepository.save(personagemExistente)
     }
 
-    //PASSAR OS EXEMPLOS DA CONTROLADORA
+    fun excluirPersonagem(id: Long) {
+        personagemRepository.deleteById(id)
+    }
 }

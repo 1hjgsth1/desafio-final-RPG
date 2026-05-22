@@ -3,38 +3,42 @@ package com.uniduo.desafio_final_rpg.controller
 import com.uniduo.desafio_final_rpg.service.PersonagemService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.RestClient
 
+@RestController
+@RequestMapping("/combate")
 class CombateController(
-    // @Value injeta o valor da propriedade "rival.url" do application.properties
-    // Ex: rival.url=http://192.168.1.12:8080/ouvir
-    // Isso evita hardcodar IPs/URLs no código
-    @Value("\${rival.url}") private val rivalUrl: String,
-    // RestClient é o cliente HTTP do Spring (substituto moderno do RestTemplate)
-    // Usado para fazer requisições HTTP para outros servidores
+    @Value("\${rival.combate.url}")
+    private val rivalCombateUrl: String,
+
     val restClient: RestClient,
     val personagemService: PersonagemService
-
 ) {
 
-    @GetMapping("/atacar")
-    fun atacar(poder: Int) {
-        println("Estou atacando meu rival")
-        try {
+    @GetMapping("/atacar/{id}")
+    fun atacar(@PathVariable id: Long): String {
+        val personagem = personagemService.buscarPorId(id)
+        val dano = personagem.forca
+
+        return try {
             restClient.post()
-                .uri(rivalUrl).contentType(MediaType.TEXT_PLAIN)
-                .body(poder.toString()).retrieve().toBodilessEntity()
+                .uri(rivalCombateUrl)
+                .contentType(MediaType.TEXT_PLAIN)
+                .body(dano.toString())
+                .retrieve()
+                .toBodilessEntity()
+
+            "${personagem.nome} atacou o rival causando $dano de dano"
         } catch (e: Exception) {
-            println("Deu erro: ${e.message}")
+            "Erro ao atacar rival: ${e.message}"
         }
     }
 
     @PostMapping("/apanhar", consumes = [MediaType.TEXT_PLAIN_VALUE])
-    fun apanhar(@RequestBody poder: Int) {
-        println("Seu personagem perdeu: $poder de vida")
-    }
+    fun apanhar(@RequestBody danoTexto: String): String {
+        val dano = danoTexto.toDouble()
 
+        return "Seu personagem recebeu $dano de dano"
+    }
 }
