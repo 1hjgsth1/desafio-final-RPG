@@ -1,5 +1,8 @@
 package com.uniduo.desafio_final_rpg.controller
 
+import com.uniduo.desafio_final_rpg.model.Guerreiro
+import com.uniduo.desafio_final_rpg.model.Ladino
+import com.uniduo.desafio_final_rpg.model.Mago
 import com.uniduo.desafio_final_rpg.model.Personagem
 import com.uniduo.desafio_final_rpg.service.PersonagemService
 import org.springframework.web.bind.annotation.*
@@ -37,5 +40,20 @@ class PersonagemController(
     fun excluirPersonagem(@PathVariable id: Long): String {
         personagemService.excluirPersonagem(id)
         return "Personagem excluído com sucesso"
+    }
+
+    @PostMapping("/guerreiro")
+    fun salvarGuerreiro(@RequestBody guerreiro: Guerreiro): Personagem {
+        return personagemService.salvar(guerreiro)
+    }
+
+    @PostMapping("/mago")
+    fun salvarMago(@RequestBody mago: Mago): Personagem {
+        return personagemService.salvar(mago)
+    }
+
+    @PostMapping("/ladino")
+    fun salvarLadino(@RequestBody ladino: Ladino): Personagem {
+        return personagemService.salvar(ladino)
     }
 }
