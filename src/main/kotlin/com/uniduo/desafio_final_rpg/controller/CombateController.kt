@@ -19,6 +19,11 @@ class CombateController(
     @GetMapping("/atacar/{id}")
     fun atacar(@PathVariable id: Long): String {
         val personagem = personagemService.buscarPorId(id)
+
+        if (personagem.vida <= 0) {
+            return "${personagem.nome} está derrotado e não pode mais atacar!"
+        }
+
         val dano = personagem.forca
 
         return try {
@@ -41,6 +46,11 @@ class CombateController(
         @RequestBody danoTexto: String
     ): String {
         val personagem = personagemService.buscarPorId(id)
+
+        if (personagem.vida <= 0) {
+            return "${personagem.nome} já está derrotado. Nenhum dano adicional foi aplicado."
+        }
+
         val dano = danoTexto.toDouble()
 
         personagem.vida -= dano
