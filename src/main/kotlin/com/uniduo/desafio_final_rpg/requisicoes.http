@@ -1,12 +1,12 @@
 ### Salvar personagem | usar as rotas /guerreiro  /mago  /ladino
-POST http://localhost:8080/personagens
+POST http://localhost:8080/personagens/mago
 Content-Type: application/json
 
 {
-  "nome": "Lucas",
-  "forca": 50.0,
-  "velocidade": 50.0,
-  "vida": 50.0
+  "nome": "Arthur",
+  "forca": 100.0,
+  "velocidade": 100.0,
+  "vida": 100.0
 }
 
 ### Listar todos os personagens + por id
@@ -24,7 +24,7 @@ Content-Type: application/json
 }
 
 ### Excluir personagem
-DELETE http://localhost:8080/personagens/107
+DELETE http://localhost:8080/personagens/155
 
 ### Testar ouvir mensagem
 POST http://localhost:8080/chat/ouvir
@@ -33,17 +33,16 @@ Content-Type: text/plain
 Lucas: teste pelo IntelliJ
 
 ### Enviar mensagem para o rival
-POST http://localhost:8080/chat/msg
+POST http://26.149.198.208:8080/chat/ouvir
 Content-Type: text/plain
 
 Lucas: eae, mensagem enviada pelo IntelliJ
 
 ### Atacar rival
-GET http://localhost:8080/combate/atacar?poder=25
+GET http://localhost:8080/combate/atacar/153
 
-### Receber ataque
-POST http://localhost:8080/combate/apanhar/1
+### Testar receber dano no meu personagem
+POST http://localhost:8080/combate/apanhar/153
 Content-Type: text/plain
 
 25
-

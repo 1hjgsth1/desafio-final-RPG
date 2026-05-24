@@ -35,10 +35,26 @@ class CombateController(
         }
     }
 
-    @PostMapping("/apanhar", consumes = [MediaType.TEXT_PLAIN_VALUE])
-    fun apanhar(@RequestBody danoTexto: String): String {
+    @PostMapping("/apanhar/{id}", consumes = [MediaType.TEXT_PLAIN_VALUE])
+    fun apanhar(
+        @PathVariable id: Long,
+        @RequestBody danoTexto: String
+    ): String {
+        val personagem = personagemService.buscarPorId(id)
         val dano = danoTexto.toDouble()
 
-        return "Seu personagem recebeu $dano de dano"
+        personagem.vida -= dano
+
+        if (personagem.vida < 0) {
+            personagem.vida = 0.0
+        }
+
+        personagemService.salvar(personagem)
+
+        return if (personagem.vida <= 0) {
+            "${personagem.nome} recebeu $dano de dano e foi derrotado!"
+        } else {
+            "${personagem.nome} recebeu $dano de dano. Vida restante: ${personagem.vida}"
+        }
     }
 }
