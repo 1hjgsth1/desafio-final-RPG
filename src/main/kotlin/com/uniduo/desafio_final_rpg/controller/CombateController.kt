@@ -57,6 +57,18 @@ class CombateController(
                 .retrieve()
                 .toBodilessEntity()
 
+            println("""
+================ ATAQUE ================
+Atacante: ${personagem.nome}
+Tipo: ${personagem::class.simpleName}
+Vida atual: ${personagem.vida}
+Dano base: $danoBase
+Quantidade de ataques: $quantidadeAtaques
+Dano total enviado: $danoTotal
+Destino: $rivalCombateUrl
+========================================
+""".trimIndent())
+
             when (personagem) {
                 is Mago -> "${personagem.nome} atacou como MAGO causando $danoTotal de dano. Força: ${personagem.forca} + Magia: ${personagem.magia}."
                 is Ladino -> "${personagem.nome} atacou como LADINO causando $danoTotal de dano.$mensagemEspecial"
@@ -103,6 +115,16 @@ class CombateController(
         }
 
         personagemService.salvar(personagem)
+
+        println("""
+=============== DEFESA ===============
+Personagem atingido: ${personagem.nome}
+Tipo: ${personagem::class.simpleName}
+Dano recebido: $danoRecebido
+Dano final aplicado: $danoFinal
+Vida restante: ${personagem.vida}
+======================================
+""".trimIndent())
 
         return when {
             personagem is Guerreiro && personagem.vida <= 0 -> {

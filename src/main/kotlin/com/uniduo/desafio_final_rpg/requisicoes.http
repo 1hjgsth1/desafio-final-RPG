@@ -3,7 +3,7 @@ POST http://localhost:8080/personagens/guerreiro
 Content-Type: application/json
 
 {
-  "nome": "Lucas",
+  "nome": "Teste",
   "forca": 100.0,
   "velocidade": 100.0,
   "vida": 100.0
@@ -17,7 +17,7 @@ PUT http://localhost:8080/personagens/202
 Content-Type: application/json
 
 {
-  "nome": "Lucas",
+  "nome": "Lucas Editado",
   "forca": 1000.0,
   "velocidade": 1000.0,
   "vida": 1000.0
