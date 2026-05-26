@@ -2,7 +2,6 @@ package com.uniduo.desafio_final_rpg.controller
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -11,7 +10,7 @@ import org.springframework.web.client.RestClient
 
 @RestController
 @RequestMapping("/chat")
-class ChatController (
+class ChatController(
     // RestClient é o cliente HTTP do Spring (substituto moderno do RestTemplate)
     // Usado para fazer requisições HTTP para outros servidores
     val restClient: RestClient,
@@ -20,7 +19,7 @@ class ChatController (
     //Meu = 10.10.7.234 //Arthur = 10.10.7.160 //Luiz = 10.10.7.235
     // Isso evita hardcodar IPs/URLs no código
     @Value("\${rival.url}") private val rivalUrl: String,
-){
+) {
     // @GetMapping: este endpoint responde a requisições HTTP GET em "/msg"
     // Serve como o "gatilho" para enviar uma mensagem ao rival
     // Uso: GET http://localhost:8080/msg?mensagem=Olá
