@@ -39,10 +39,10 @@ Content-Type: text/plain
 Lucas: Sabe de nada
 
 ### Atacar rival
-GET http://localhost:8080/combate/atacar/202
+GET http://localhost:8080/combate/atacar/
 
 ### Testar receber dano no meu personagem
-POST http://localhost:8080/combate/apanhar/153
+POST http://localhost:8080/combate/apanhar/
 Content-Type: text/plain
 
 25
