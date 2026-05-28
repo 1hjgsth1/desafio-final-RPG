@@ -1,9 +1,9 @@
 ### Salvar personagem | usar as rotas /guerreiro  /mago  /ladino
-POST http://localhost:8080/personagens/guerreiro
+POST http://localhost:8080/personagens
 Content-Type: application/json
 
 {
-  "nome": "Teste",
+  "nome": "",
   "forca": 100.0,
   "velocidade": 100.0,
   "vida": 100.0
@@ -13,18 +13,18 @@ Content-Type: application/json
 GET http://localhost:8080/personagens
 
 ### Editar personagem
-PUT http://localhost:8080/personagens/202
+PUT http://localhost:8080/personagens/
 Content-Type: application/json
 
 {
-  "nome": "Lucas Editado",
+  "nome": "",
   "forca": 1000.0,
   "velocidade": 1000.0,
   "vida": 1000.0
 }
 
 ### Excluir personagem
-DELETE http://localhost:8080/personagens/153
+DELETE http://localhost:8080/personagens/
 
 ### Testar ouvir mensagem
 POST http://localhost:8080/chat/ouvir
